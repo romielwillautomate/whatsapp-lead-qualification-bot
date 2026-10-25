@@ -19,7 +19,7 @@ The bot uses the WhatsApp Cloud API, which Meta hosts. You need a Meta developer
 
 1. Add the variables from the README to your n8n environment (or `.env` file) and restart n8n.
 2. Import `workflow/whatsapp-lead-qualification-bot.json` and, for alerts, `workflow/error-alert-slack.json`.
-3. In the bot's workflow settings, choose the error alert workflow as its **Error Workflow**.
+3. Activate the error alert workflow, then choose it as the **Error Workflow** in the bot's workflow settings. n8n 2.x skips an error workflow that is switched off, so it must be active.
 4. Activate the bot workflow.
 
 Meta needs to reach n8n over HTTPS. A hosted n8n works as is. A local n8n needs a tunnel such as Cloudflare Tunnel or ngrok.

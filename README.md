@@ -95,8 +95,8 @@ In GoHighLevel, the contact gets the tags `whatsapp-lead`, `ai-qualified`, `scor
 
 1. Import `workflow/whatsapp-lead-qualification-bot.json` into n8n. For failure alerts, also import `workflow/error-alert-slack.json`.
 2. Add the variables below to your n8n environment and restart n8n. The nodes read them with `$env`, so self-hosted n8n needs `N8N_BLOCK_ENV_ACCESS_IN_NODE=false`. (n8n Cloud does not allow `$env`. There, replace `$env.` with `$vars.` and create the same names under Variables.)
-3. In the bot's workflow settings, choose the error alert workflow as its **Error Workflow**.
-4. Activate the workflow.
+3. Activate the error alert workflow, then choose it as the **Error Workflow** in the bot's workflow settings. It has to be active: n8n 2.x skips an error workflow that is switched off, so no alert would arrive.
+4. Activate the bot workflow.
 5. In your Meta app, set the callback URL to `https://YOUR-N8N-DOMAIN/webhook/whatsapp-lead-bot`, enter your verify token and subscribe to the `messages` field. Step by step, including how to get a permanent token: [docs/meta-setup.md](docs/meta-setup.md).
 
 | Variable | Required | Where to find it |
