@@ -54,7 +54,7 @@ The webhook answers Meta right away and does the work afterwards, so Meta never 
 | 6 | Claude: Qualify Lead | One call per message. Claude answers through a forced tool call, so the reply and the details always come back as clean JSON |
 | 7 | WhatsApp: Send Fallback, Stop: AI Failed | If Claude still fails after 3 tries, the lead gets a holding reply and you get an alert |
 | 8 | Parse AI Reply | Merges the new details with what was already known, scores the lead and checks if it is complete |
-| 9 | Save Conversation | Saves the memory (last 20 turns) and clears chats with no activity for 7 days |
+| 9 | Save Conversation | Saves the memory (the last 20 messages, and Claude sees the last 12 of them) and clears chats with no activity for 7 days |
 | 10 | WhatsApp: Send Reply, Stop: Reply Failed | Sends the reply. If WhatsApp refuses it, the alert includes the lead's details so nothing is lost |
 | 11 | Lead Qualified? | True once per lead, when all five details are in |
 | 12 | GHL: Upsert Contact, GHL: Add Tags, GHL: Add Note | Saves the lead in GoHighLevel |
@@ -107,7 +107,7 @@ In GoHighLevel, the contact gets the tags `whatsapp-lead`, `ai-qualified`, `scor
 | `WHATSAPP_VERIFY_TOKEN` | yes | Any long random string you make up. Paste the same value in the Meta webhook settings |
 | `WHATSAPP_API_VERSION` | no | Graph API version, default `v23.0` |
 | `ANTHROPIC_API_KEY` | yes | console.anthropic.com → API keys |
-| `ANTHROPIC_MODEL` | no | Default `claude-sonnet-5`. `claude-haiku-4-5-20251001` is cheaper and faster |
+| `ANTHROPIC_MODEL` | no | Default `claude-sonnet-5`. `claude-haiku-4-5` is cheaper and faster. Not `claude-opus-5-5` or `claude-fable-5-1`: they refuse the forced tool call the reply uses |
 | `BUSINESS_NAME` | no | The business name the assistant uses (default "our team") |
 | `BUSINESS_ABOUT` | no | One line about the business, for example "a digital marketing and automation agency" |
 | `GHL_API_KEY` | yes | GoHighLevel → Settings → Private Integrations, with the View Contacts and Edit Contacts scopes (token starts with `pit-`) |
@@ -148,7 +148,7 @@ Testing v1 against the mocks showed that it never replied to anyone. With that f
 
 ## Cost
 
-Each incoming message is one Claude call of roughly 1,500 to 2,000 input tokens (measured with Anthropic's token counter) and 100 to 300 output tokens. A lead who finishes in six messages uses about 10,000 input and 1,500 output tokens. Setting `ANTHROPIC_MODEL=claude-haiku-4-5-20251001` lowers the cost further.
+Each incoming message is one Claude call of roughly 1,500 to 2,000 input tokens (measured with Anthropic's token counter) and 100 to 300 output tokens. A lead who finishes in six messages uses about 10,000 input and 1,500 output tokens. Setting `ANTHROPIC_MODEL=claude-haiku-4-5` lowers the cost further.
 
 ## Limitations and next steps
 
